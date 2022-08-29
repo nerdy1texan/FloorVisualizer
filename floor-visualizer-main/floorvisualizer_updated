@@ -1,0 +1,70 @@
+import numpy as np
+import cv2
+from google.colab.patches import cv2_imshow
+
+# Read image(s)
+img = cv2.imread('housepng.png')
+origImg = cv2.imread('housepng.png')
+wood = cv2.imread('housepng.png')
+originalImg = img
+#img
+
+# Step 1: Get Grayscale
+gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+#gray
+
+# Step 3: Blur image
+blur = cv2.medianBlur(gray, 17)
+#blur
+
+# Step 4: Canny
+canny = cv2.Canny(blur, 0, 100)
+cv2_imshow(canny)
+
+
+
+
+# Step 1: Get HSV
+hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
+hsvBlur = cv2.medianBlur(hsv, 17)
+#hsvBlur
+
+# Step 2: Get HSV-Channels
+h,s,v = cv2.split(hsv)
+#h,s,v
+
+# Step 4: Canny
+cannyHsv = cv2.Canny(hsvBlur, 0, 170)
+cv2_imshow(cannyHsv)
+
+# Step 5: TODO // Merge both canny Matrices - Linear Blending // Check
+dst = cv2.addWeighted(canny, 0.7, cannyHsv, 0.3, 0.0)
+#dst
+
+# TODO // Check  canny function. Add both  canny functions
+# Step 6: Dilate resulting image matrix from step 5
+dilation = cv2.dilate(dst,(5,5),iterations = 9)
+#dilation
+
+# Resize dilation image // x+y are reversed  in resize function
+resized_image = cv2.resize(dilation, (3026, 4034))
+#resized_image
+
+# Step 7: Floodfill
+h, w = dilation.shape
+mask = np.zeros((h+2, w+2), np.uint8)
+floodfill_color = 255,0,0
+height, width = dilation.shape[:2]
+width+=2
+height+=2
+# Resize dilation image // x+y are reversed  in resize function
+resized_image = cv2.resize(dilation, (width, height))
+#resized_image
+
+img = cv2.medianBlur(img, 15)
+#img
+
+
+
+
+
