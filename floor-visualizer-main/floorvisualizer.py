@@ -1,10 +1,16 @@
+#nerdytexan
+
 import numpy as np
 import cv2
 
+#path
+path = r'https://github.com/nerdy1texan/FloorVisualizer/blob/main/floor-visualizer-main/6.jpeg'
+
+
 # Read image(s)
-img = cv2.imread('Resources/yourimagehere.jpg')
-origImg = cv2.imread('Resources/imghere.png')
-wood = cv2.imread('Resources/yourwoodimagehere.png')
+img = cv2.imread(path)
+origImg = cv2.imread(path)
+wood = cv2.imread(path)
 originalImg = img
 
 # Step 1: Get Grayscale
